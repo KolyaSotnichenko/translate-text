@@ -12,7 +12,6 @@
     "@types/langdetect": "^0.2.0",
     "axios": "^1.5.1",
     "debug": "^4.3.4",
-    "franc": "^6.1.0",
     "langdetect": "^0.2.1",
     "next": "13.5.5",
     "react": "^18",
