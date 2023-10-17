@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Spinner from "@/components/Spinner";
 
 const languages: string[] = ["uk", "ru", "en", "pl"];
 
@@ -9,8 +10,10 @@ const Home = () => {
   const [text, setText] = useState("");
   const [detectedLanguage, setDetectedLanguage] = useState<string>("");
   const [translations, setTranslations] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleTranslate = async () => {
+    setIsLoading(true);
     try {
       const translationPromises = languages.map((lang) =>
         axios.post("/api/translate", {
@@ -25,9 +28,10 @@ const Home = () => {
       );
       setDetectedLanguage(translatedTexts[0].data.detectedLang);
 
-      console.log(translatedTexts);
+      setIsLoading(false);
     } catch (error) {
       console.error("Translation error:", error);
+      setIsLoading(false);
     }
   };
   return (
@@ -40,28 +44,34 @@ const Home = () => {
       />
       <button
         type="button"
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        className="text-white w-[500px] bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         onClick={handleTranslate}
       >
         Translate
       </button>
       {/* <p>Detected Language: {detectedLanguage}</p> */}
-      <ul className="w-[500px]">
-        {translations.map((translation, index) => (
-          <li className="mb-2" key={languages[index]}>
-            <span
-              className={
-                languages[index] === detectedLanguage ? "text-orange-400" : ""
-              }
-            >
-              {languages[index] === detectedLanguage
-                ? languages[index] + " " + "original"
-                : languages[index]}
-            </span>
-            : {translation}
-          </li>
-        ))}
-      </ul>
+      {!isLoading ? (
+        <ul className="w-[500px]">
+          {translations.map((translation, index) => (
+            <li className="mb-2" key={languages[index]}>
+              <span
+                className={
+                  languages[index] === detectedLanguage ? "text-orange-400" : ""
+                }
+              >
+                {languages[index] === detectedLanguage
+                  ? languages[index] + " " + "original"
+                  : languages[index]}
+              </span>
+              : {translation}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="grid place-content-center">
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 };
