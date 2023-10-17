@@ -9,17 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/langdetect": "^0.2.0",
+    "axios": "^1.5.1",
+    "debug": "^4.3.4",
+    "franc": "^6.1.0",
+    "langdetect": "^0.2.1",
+    "next": "13.5.5",
     "react": "^18",
     "react-dom": "^18",
-    "next": "13.5.5"
+    "supports-color": "8.1.1",
+    "translate-google": "^1.5.0"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "postcss": "^8",
-    "tailwindcss": "^3"
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }
